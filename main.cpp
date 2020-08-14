@@ -21,19 +21,42 @@ struct ListNode
 // Example would be input "45" and returns "gj", "gk", "gl", "hj", "hk", "hl", "ij", "ik", "il" 
 std::vector<std::string> letterCombinations(std::string digits);
 
-// given the head of a list, removes the nth node from the end
+// Given the head of a list, removes the nth node from the end
 ListNode* removeNthFromEnd(ListNode* head, int n);
 
-// delete the entire list
+// Delete the entire list
 ListNode* deleteList(ListNode* head);
+
+// Given n pairs of parentheses, this function generates all combinations of well-formed parentheses.
+std::vector<std::string> generateParenthesis(int n);
 
 // Entry point
 int main() 
 {
-    
+    int input;
+
+    std::cout << "Pairs of parentheses: ";
+    std::cin >> input;
+
+    std::vector<std::string> res = generateParenthesis(input);
+
+    std::cout << "[" << std::endl;
+    for(auto& a : res) {
+        std::cout << "\t\"" << a << "\"" << std::endl;
+    }
+    std::cout << "]" << std::endl;
 }
 
 // Functions
+
+std::vector<std::string> generateParenthesis(int n)
+{
+    std::vector<std::string> res;
+
+    
+
+    return res;
+}
 
 ListNode* deleteList(ListNode* head) 
 {
