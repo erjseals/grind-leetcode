@@ -1,9 +1,14 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <memory>
+
+// I wouldn't normally do this
+// But Leetcode does, so that's what I'm practicing
+using namespace std;
 
 // Data Structures and Constants Necessary
-std::vector<std::string> t9 = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+vector<string> t9 = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
 
 struct ListNode 
 {
@@ -19,7 +24,7 @@ struct ListNode
 // letterCominations returns a vector<string> that contains all possible 
 // strings given a numerical combination. This is like t9 texting. 
 // Example would be input "45" and returns "gj", "gk", "gl", "hj", "hk", "hl", "ij", "ik", "il" 
-std::vector<std::string> letterCombinations(std::string digits);
+vector<string> letterCombinations(string digits);
 
 // Given the head of a list, removes the nth node from the end
 ListNode* removeNthFromEnd(ListNode* head, int n);
@@ -28,34 +33,118 @@ ListNode* removeNthFromEnd(ListNode* head, int n);
 ListNode* deleteList(ListNode* head);
 
 // Given n pairs of parentheses, this function generates all combinations of well-formed parentheses.
-std::vector<std::string> generateParenthesis(int n);
+vector<string> generateParenthesis(int n);
+
+// Helper for generateParenthesis
+void helper(vector<string> &vec, string str, int l, int r);
+
+// Merge k lists into one.
+ListNode* mergeKLists(vector<ListNode*>& lists);
+
+// Merge two lists into one
+ListNode* mergeTwoLists(ListNode* l1, ListNode* l2);
 
 // Entry point
 int main() 
 {
-    int input;
+    vector<ListNode*> lists;
 
-    std::cout << "Pairs of parentheses: ";
-    std::cin >> input;
+    ListNode* l13 = new ListNode(5);
+    ListNode* l12 = new ListNode(4, l13);
+    ListNode* l11 = new ListNode(1, l12);
 
-    std::vector<std::string> res = generateParenthesis(input);
+    ListNode* l23 = new ListNode(4);
+    ListNode* l22 = new ListNode(3, l23);
+    ListNode* l21 = new ListNode(1, l22);
 
-    std::cout << "[" << std::endl;
-    for(auto& a : res) {
-        std::cout << "\t\"" << a << "\"" << std::endl;
+    ListNode* l32 = new ListNode(6);
+    ListNode* l31 = new ListNode(2, l32);
+
+    lists.push_back(l11);
+    lists.push_back(l21);
+    lists.push_back(l31);
+
+    ListNode* head = mergeKLists(lists);
+
+    cout << "[";
+
+    while(head)
+    {
+        cout << head->val << " ";
+        head = head->next;
     }
-    std::cout << "]" << std::endl;
+
+    cout << "]" << endl;
+
+    delete l13;
+    delete l12;
+    delete l11;
+
+    delete l23;
+    delete l22;
+    delete l21;
+
+    delete l32;
+    delete l31;
 }
 
 // Functions
 
-std::vector<std::string> generateParenthesis(int n)
+ListNode* mergeTwoLists(ListNode* l1, ListNode* l2)
 {
-    std::vector<std::string> res;
+    if(!l1) return l2;
+    else if(!l2) return l1;
 
+    if(l1->val <= l2->val) 
+    {
+        l1->next = mergeTwoLists(l1->next, l2);
+        return l1;
+    }
+
+    else 
+    {
+        l2->next = mergeTwoLists(l1, l2->next);
+        return l2;
+    }
+}
+
+ListNode* mergeKLists(vector<ListNode*>& lists) 
+{
+    if(lists.size() < 1) return nullptr;
+
+    else if(lists.size() < 2) return lists[0];
+
+    else 
+    {
+        // Set initial values, then loop through the rest
+        ListNode* ret = mergeTwoLists(lists[0], lists[1]);
+        
+        for(unsigned int i = 2 ; i < lists.size() ; i++) 
+            ret = mergeTwoLists(ret, lists[i]);        
+        
+        return ret;
+    }
+}
+
+vector<string> generateParenthesis(int n)
+{
+    vector<string> vec;
+    helper(vec, "", n, 0);
+    return vec;
+}
+
+void helper(vector<string> &vec, string str, int l, int r) 
+{
+    if(l == 0 && r == 0) 
+    {
+        vec.push_back(str);
+        return;
+    }
     
-
-    return res;
+    if(l > 0) 
+        helper(vec, str+"(", l - 1, r + 1);
+    if(r > 0) 
+        helper(vec, str+")", l, r - 1);
 }
 
 ListNode* deleteList(ListNode* head) 
@@ -93,10 +182,10 @@ ListNode* removeNthFromEnd(ListNode* head, int n)
     return head;
 }
 
-std::vector<std::string> letterCombinations(std::string digits) 
+vector<string> letterCombinations(string digits) 
 {
     // Initialize the result vector with an empty string for the base case swap
-    std::vector<std::string> res = {""};
+    vector<string> res = {""};
 
     for(unsigned int i = 0 ; i < digits.size() ; i++) 
     {
@@ -108,9 +197,9 @@ std::vector<std::string> letterCombinations(std::string digits)
         if(0 > digit || digit > 9) continue;
 
         // Use a const ref since we won't change the values.
-        const std::string& str = t9[digit]; 
+        const string& str = t9[digit]; 
 
-        std::vector<std::string> temp;
+        vector<string> temp;
 
         for(unsigned int k = 0 ; k < res.size() ; k++) 
             for(unsigned int j = 0 ; j < str.size() ; j++) 
