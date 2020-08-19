@@ -22,25 +22,169 @@ struct ListNode
 class PriorityQueue
 {
 private:
-    ListNode* head;
     int m_size;
+    std::vector<ListNode*> m_container;
+
+    // Given the index of the newly inserted node
+    // percolate this node up the tree as needed
+    // 
+    void percolateUp (int index) 
+    {
+        if (index < 1)
+            return;
+        // Compare the node to its parent
+        if (compare(m_container[ index ], m_container[ (index - 1) / 2 ]))
+        {
+            ListNode* swap = m_container[ (index - 1) / 2 ];
+            m_container[ (index - 1) / 2 ] = m_container[ index ];
+            m_container[ index ] = swap;
+            percolateUp( (index - 1) / 2 );
+        }
+        return;
+    }
+
+    void percolateDown (int index) 
+    {
+        // Check if and then which child to swap with
+        // First see if there even exists children
+
+        int lChild = index * 2 + 1;
+        int rChild = index * 2 + 2;
+
+        // Case 1 : no children
+        if ( lChild > (m_size - 1) )
+            return;
+
+        // Case 2 : Only left child
+        if ( lChild == (m_size - 1) )
+        {
+            // Left child has higher priority than parent
+            if (compare( m_container[ lChild ], m_container[index]))
+            {
+                ListNode* swap = m_container[ index ];
+                m_container[ index ] = m_container[ lChild ];
+                m_container[ lChild ] = swap;
+            }
+            // No need to percolate down
+            return;
+        }
+
+        // Case 3 : Two children 
+        // First assess which of the two has higher priority
+
+        // This evaluates true when left has higher priority
+        if ( compare(m_container[lChild], m_container[rChild]) )
+        {
+            // Left child has higher priority than parent
+            if (compare( m_container[ lChild ], m_container[index]))
+            {
+                ListNode* swap = m_container[ index ];
+                m_container[ index ] = m_container[ lChild ];
+                m_container[ lChild ] = swap;
+                percolateDown(lChild);
+            }
+            return;
+        }
+        else 
+        {
+            // Right child has higher priority than parent
+            if (compare( m_container[ rChild ], m_container[index]))
+            {
+                ListNode* swap = m_container[ index ];
+                m_container[ index ] = m_container[ rChild ];
+                m_container[ rChild ] = swap;
+                percolateDown(rChild);
+            }
+            return;
+        }
+    }
+
+    bool compare(ListNode* a, ListNode* b) 
+    {
+        if(a->val < b->val)
+            return true;
+        else 
+            return false; 
+    }
+
 public:
-    PriorityQueue() : head(nullptr), m_size(0){}
+    PriorityQueue() 
+        : m_size(0){}
     
     ~PriorityQueue(){}
     
     bool empty()
     {
-        return m_size == 0 ? true : false;
+        return m_size < 1;
     }    
     
     int size()
     {
         return m_size;
     }
-    
-    void push(ListNode* ln);
-    ListNode* pop();
+
+    ListNode* top() 
+    {
+        if(empty()) 
+            return nullptr;
+        else 
+            return m_container[0];
+    }
+
+    // Puts new node into the tree
+    // then calls a function to do necessary percolations
+    void push(ListNode* ln)
+    {
+        std::cout << "What is being pushed?" << ln->val << std::endl;
+
+
+        // Case 1 : Empty
+        if(m_size == 0)
+        {
+            m_container.push_back(ln);
+            m_size++;
+        }
+
+        // Case 2 : Non-Empty
+        // Put the new element into the vector. The index will be m_size
+        else 
+        {
+            m_container.push_back(ln);
+            percolateUp(m_size);
+            m_size++;
+        }
+    }
+
+    ListNode* pop()
+    {
+        if(empty()){
+            std::cout << "Popping empty!" << std::endl;
+            return nullptr;
+        }
+
+        // Grab the top node to return in a moment
+        ListNode* ret = m_container[0];
+
+        // Decrement the size of Queue
+        m_size--;
+
+        if(m_size > 0)
+        {
+            // Set the top of the Queue to the very bottom right most Node 
+            m_container[0] = m_container[m_size];
+
+            // Percolate down starting at index 0
+            percolateDown(0);
+        }
+
+        std::cout << "What is being popped?" << ret->val << std::endl;
+
+        // Pop that element from the container
+        m_container.pop_back();
+
+        // return the node
+        return ret;
+    }
 };
 // Function Declarations
 
@@ -72,46 +216,37 @@ ListNode* mergeTwoLists(ListNode* l1, ListNode* l2);
 
 // Entry point
 int main() 
-{
+{   
     std::vector<ListNode*> lists;
 
-    ListNode* l13 = new ListNode(5);
-    ListNode* l12 = new ListNode(4, l13);
-    ListNode* l11 = new ListNode(1, l12);
+    ListNode* l14 = new ListNode(-1);
+    ListNode* l13 = new ListNode(-1, l14);
+    ListNode* l12 = new ListNode(-1, l13);
+    ListNode* l11 = new ListNode(-2, l12);
 
-    ListNode* l23 = new ListNode(4);
-    ListNode* l22 = new ListNode(3, l23);
-    ListNode* l21 = new ListNode(1, l22);
-
-    ListNode* l32 = new ListNode(6);
-    ListNode* l31 = new ListNode(2, l32);
+    ListNode* l21 = nullptr;
 
     lists.push_back(l11);
     lists.push_back(l21);
-    lists.push_back(l31);
 
-    ListNode* head = mergeKLists(lists);
+    ListNode* head = mergeKListsPQ(lists);
 
     std::cout << "[";
 
     while(head)
     {
+        int input;
+        std::cin >> input;
         std::cout << head->val << " ";
         head = head->next;
     }
 
     std::cout << "]" << std::endl;
 
+    delete l14;
     delete l13;
     delete l12;
     delete l11;
-
-    delete l23;
-    delete l22;
-    delete l21;
-
-    delete l32;
-    delete l31;
 }
 
 // Functions
@@ -150,6 +285,41 @@ ListNode* mergeKLists(std::vector<ListNode*>& lists)
         
         return ret;
     }
+}
+
+ListNode* mergeKListsPQ(std::vector<ListNode*>& lists)
+{
+    PriorityQueue pq;
+
+    ListNode* temp;
+    // Throw everything into the priority queue
+    for(auto & list : lists)
+    {
+        temp = list;
+        while(temp)
+        {
+            pq.push(temp);
+            temp = temp->next;
+        }
+    }
+
+    // temp = new ListNode(1);
+
+    ListNode* head = pq.pop();
+
+    if(!head) return nullptr;
+
+    temp = head;
+
+    while(!pq.empty())
+    {
+        temp->next = pq.pop();
+        temp = temp->next;
+    }
+    
+    temp->next = nullptr;
+
+    return head;
 }
 
 std::vector<std::string> generateParenthesis(int n)
