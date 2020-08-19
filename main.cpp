@@ -2,13 +2,13 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <queue>
 
 // I wouldn't normally do this
 // But Leetcode does, so that's what I'm practicing
-using namespace std;
 
 // Data Structures and Constants Necessary
-vector<string> t9 = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+std::vector<std::string> t9 = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
 
 struct ListNode 
 {
@@ -19,12 +19,35 @@ struct ListNode
     ListNode(int x, ListNode* next) : val(x), next(next) {}
 };
 
+class PriorityQueue
+{
+private:
+    ListNode* head;
+    int m_size;
+public:
+    PriorityQueue() : head(nullptr), m_size(0){}
+    
+    ~PriorityQueue(){}
+    
+    bool empty()
+    {
+        return m_size == 0 ? true : false;
+    }    
+    
+    int size()
+    {
+        return m_size;
+    }
+    
+    void push(ListNode* ln);
+    ListNode* pop();
+};
 // Function Declarations
 
-// letterCominations returns a vector<string> that contains all possible 
-// strings given a numerical combination. This is like t9 texting. 
+// letterCominations returns a std::vector<std::string> that contains all possible 
+// std::strings given a numerical combination. This is like t9 texting. 
 // Example would be input "45" and returns "gj", "gk", "gl", "hj", "hk", "hl", "ij", "ik", "il" 
-vector<string> letterCombinations(string digits);
+std::vector<std::string> letterCombinations(std::string digits);
 
 // Given the head of a list, removes the nth node from the end
 ListNode* removeNthFromEnd(ListNode* head, int n);
@@ -33,13 +56,16 @@ ListNode* removeNthFromEnd(ListNode* head, int n);
 ListNode* deleteList(ListNode* head);
 
 // Given n pairs of parentheses, this function generates all combinations of well-formed parentheses.
-vector<string> generateParenthesis(int n);
+std::vector<std::string> generateParenthesis(int n);
 
 // Helper for generateParenthesis
-void helper(vector<string> &vec, string str, int l, int r);
+void helper(std::vector<std::string> &vec, std::string str, int l, int r);
 
 // Merge k lists into one.
-ListNode* mergeKLists(vector<ListNode*>& lists);
+ListNode* mergeKLists(std::vector<ListNode*>& lists);
+
+// Merge k lists using std library priority queue
+ListNode* mergeKListsPQ(std::vector<ListNode*>& lists);
 
 // Merge two lists into one
 ListNode* mergeTwoLists(ListNode* l1, ListNode* l2);
@@ -47,7 +73,7 @@ ListNode* mergeTwoLists(ListNode* l1, ListNode* l2);
 // Entry point
 int main() 
 {
-    vector<ListNode*> lists;
+    std::vector<ListNode*> lists;
 
     ListNode* l13 = new ListNode(5);
     ListNode* l12 = new ListNode(4, l13);
@@ -66,15 +92,15 @@ int main()
 
     ListNode* head = mergeKLists(lists);
 
-    cout << "[";
+    std::cout << "[";
 
     while(head)
     {
-        cout << head->val << " ";
+        std::cout << head->val << " ";
         head = head->next;
     }
 
-    cout << "]" << endl;
+    std::cout << "]" << std::endl;
 
     delete l13;
     delete l12;
@@ -108,7 +134,7 @@ ListNode* mergeTwoLists(ListNode* l1, ListNode* l2)
     }
 }
 
-ListNode* mergeKLists(vector<ListNode*>& lists) 
+ListNode* mergeKLists(std::vector<ListNode*>& lists) 
 {
     if(lists.size() < 1) return nullptr;
 
@@ -126,14 +152,14 @@ ListNode* mergeKLists(vector<ListNode*>& lists)
     }
 }
 
-vector<string> generateParenthesis(int n)
+std::vector<std::string> generateParenthesis(int n)
 {
-    vector<string> vec;
+    std::vector<std::string> vec;
     helper(vec, "", n, 0);
     return vec;
 }
 
-void helper(vector<string> &vec, string str, int l, int r) 
+void helper(std::vector<std::string> &vec, std::string str, int l, int r) 
 {
     if(l == 0 && r == 0) 
     {
@@ -182,10 +208,10 @@ ListNode* removeNthFromEnd(ListNode* head, int n)
     return head;
 }
 
-vector<string> letterCombinations(string digits) 
+std::vector<std::string> letterCombinations(std::string digits) 
 {
-    // Initialize the result vector with an empty string for the base case swap
-    vector<string> res = {""};
+    // Initialize the result std::vector with an empty std::string for the base case swap
+    std::vector<std::string> res = {""};
 
     for(unsigned int i = 0 ; i < digits.size() ; i++) 
     {
@@ -197,9 +223,9 @@ vector<string> letterCombinations(string digits)
         if(0 > digit || digit > 9) continue;
 
         // Use a const ref since we won't change the values.
-        const string& str = t9[digit]; 
+        const std::string& str = t9[digit]; 
 
-        vector<string> temp;
+        std::vector<std::string> temp;
 
         for(unsigned int k = 0 ; k < res.size() ; k++) 
             for(unsigned int j = 0 ; j < str.size() ; j++) 
