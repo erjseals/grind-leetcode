@@ -19,6 +19,68 @@ struct ListNode
   ListNode(int x, ListNode* next) : val(x), next(next) {}
 };
 
+class Node
+{
+public:
+
+private:
+};
+
+class Stack
+{
+private:
+  ListNode * m_top;
+  int m_size;
+public:
+  Stack() : m_top(nullptr), m_size(0){}
+
+  ~Stack()
+  {
+    ListNode * tmp;
+    while(m_top)
+    {
+      tmp = m_top;
+      m_top = m_top->next;
+      delete tmp; 
+    }
+  }
+
+  void push(int value)
+  {
+    ListNode * tmp = new ListNode(value);
+    tmp->next = m_top;
+    m_top = tmp;
+    m_size++;
+  }
+
+  int pop()
+  {
+    if(isEmpty())
+      return 0;
+    
+    int ret = m_top->val; 
+    ListNode * tmp = m_top;
+    m_top = m_top->next;
+    delete tmp;
+    m_size--;
+
+    return ret;
+  }
+
+  int peek()
+  {
+    if(isEmpty())
+      return 0;
+    else
+      return m_top->val;
+  }
+
+  bool isEmpty()
+  {
+    return (m_size < 1);
+  }
+};
+
 class PriorityQueue
 {
 private:
@@ -187,15 +249,6 @@ public:
   }
 };
 
-class Node
-{
-public:
-
-private:
-};
-
-
-
 // Function Declarations
 
 // letterCominations returns a std::vector<std::string> that contains all possible 
@@ -224,42 +277,79 @@ ListNode* mergeKListsPQ(std::vector<ListNode*>& lists);
 // Merge two lists into one
 ListNode* mergeTwoLists(ListNode* l1, ListNode* l2);
 
+// Returns true if there is a cycle in the list
+bool isCycle(ListNode* ln);
+
+// Returns the index of the start of the cycle 
+int getStartOfCycle(ListNode* ln);
+
 // Entry point
 int main() 
 {   
-  std::vector<ListNode*> lists;
 
-  ListNode* l14 = new ListNode(-1);
-  ListNode* l13 = new ListNode(-1, l14);
-  ListNode* l12 = new ListNode(-1, l13);
-  ListNode* l11 = new ListNode(-2, l12);
+  Stack stack;
+  stack.push(0);
+  stack.push(1);
+  stack.push(2);
 
-  ListNode* l21 = nullptr;
 
-  lists.push_back(l11);
-  lists.push_back(l21);
 
-  ListNode* head = mergeKListsPQ(lists);
 
-  std::cout << "[";
-
-  while(head)
-  {
-    int input;
-    std::cin >> input;
-    std::cout << head->val << " ";
-    head = head->next;
-  }
-
-  std::cout << "]" << std::endl;
-
-  delete l14;
-  delete l13;
-  delete l12;
-  delete l11;
 }
 
 // Functions
+
+bool isCycle(ListNode* ln)
+{
+  ListNode * slowPtr = ln;
+  ListNode * fastPtr = ln;
+
+  while(fastPtr)
+  {
+    slowPtr = slowPtr->next;
+    fastPtr = fastPtr->next->next;
+
+    if(slowPtr == fastPtr)
+    {
+      return true;
+    }
+  }
+  return false;
+}
+
+// Returns the index of the start of the cycle 
+int getStartOfCycle(ListNode* ln)
+{
+  // Make sure there is a cycle
+  if(!isCycle(ln)) return 0;
+
+  ListNode * slowPtr = ln;
+  ListNode * fastPtr = ln;
+
+  while(fastPtr)
+  {
+    slowPtr = slowPtr->next;
+    fastPtr = fastPtr->next->next;
+
+    if(slowPtr == fastPtr)
+      break;
+  }
+
+  fastPtr = ln;
+  int count = 0;
+
+  while(fastPtr)
+  {
+    slowPtr = slowPtr->next;
+    fastPtr = fastPtr->next;
+
+    count++;
+
+    if(slowPtr == fastPtr)
+      break;
+  }
+  return count;
+}
 
 ListNode* mergeTwoLists(ListNode* l1, ListNode* l2)
 {
