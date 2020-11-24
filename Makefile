@@ -1,9 +1,14 @@
+CPP_SRCS := $(wildcard *.cpp) 
+OBJ_SRCS := $(CPP_SRCS:.cpp=.o)
+
+all: prog
+
 # $@ matches the target; $< matches the first dependent
-prog: main.o
-	g++ -o $@ -Wall $<
+prog: $(OBJ_SRCS) 
+	g++ -Wall -g -o $@ $(OBJ_SRCS)
 
 %.o: %.cpp
-	g++ -c -Wall -g $<
+	g++ -g -Wall -c -o $@ $<
 
 clean:
 	rm prog main.o
