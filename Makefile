@@ -11,7 +11,7 @@ prog: $(OBJ_SRCS)
 	g++ -g -Wall -c -o $@ $<
 
 clean:
-	rm prog main.o
+	rm prog *.o
 
 
 
