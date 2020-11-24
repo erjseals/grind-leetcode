@@ -286,15 +286,6 @@ int getStartOfCycle(ListNode* ln);
 // Entry point
 int main() 
 {   
-
-  Stack stack;
-  stack.push(0);
-  stack.push(1);
-  stack.push(2);
-
-
-
-
 }
 
 // Functions
