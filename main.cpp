@@ -1,8 +1,10 @@
 #include <iostream>
+#include <sstream>
 #include <vector>
 #include <string>
 #include <memory>
 #include <queue>
+#include <set>
 
 #include "ListNode.hpp"
 #include "PriorityQueue.hpp"
@@ -48,10 +50,87 @@ bool isCycle(ListNode* ln);
 // Returns the index of the start of the cycle 
 int getStartOfCycle(ListNode* ln);
 
+int solution(std::vector<int> A);
+
+std::vector<int> toIntVector(std::string str)
+{
+  std::vector<int> out;
+  std::string i;
+  std::istringstream tokenStream(str);
+  while (std::getline(tokenStream, i, ','))
+  {
+    out.push_back(atoi(i.c_str()));
+  }
+  return out;
+}
+
+
 // Entry point
 int main() 
 {   
+  std::vector<int> A = toIntVector("5,4,3,6,1");
+  std::cout << solution(A);
 }
+
+int solution(std::vector<int> A)
+{
+  int ret_rows = 0;
+  // Every element in the row needs to be greater than A[i]
+  
+  // Use a std::set
+  // This allows us to access the min / max / and current element in constant time
+  
+  // Create a vector of the row, each row is a std::set
+  std::vector<std::set<int>> vec;
+  
+  
+  for(size_t i = 0 ; i < A.size() ; i++)
+  {
+    // Init, create a new row
+    if(i == 0)
+    {
+      std::set<int> tmp;
+      tmp.insert(A[i]);
+      vec.push_back(tmp);
+    }
+    else
+    {
+      // Loop through the rows.
+      
+      bool rowFound = false;
+      for(size_t i = 0 ; i < vec.size() ; i++)
+      {
+        // Check the beginning
+        // Get the minimum element 
+        int min_element; 
+        if (!vec[i].empty()) 
+          min_element = *vec[i].begin(); 
+  
+        // Min element in the row is not greater, move on
+        if(!(min_element > A[i])) continue;
+        
+        // See if the value is in the row
+        // So, if this returns > 0 move to the next row
+        if(vec[i].count(A[i])) continue;
+        
+        // If here, add the new student to this row
+        vec[i].insert(A[i]);
+      }
+      
+      // A sufficient row NOT found, add a new one
+      if(!rowFound)
+      {
+        std::set<int> newRow;
+        newRow.insert(A[i]);
+        vec.push_back(newRow);
+      }
+    }
+  }
+  
+  // Your solution goes here.
+  return vec.size(); 
+}
+
 
 // Functions
 
