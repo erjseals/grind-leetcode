@@ -10,129 +10,70 @@
 #include "PriorityQueue.hpp"
 #include "Stack.hpp"
 
-// I wouldn't normally do this
-// But Leetcode does, so that's what I'm practicing
+/*******************************************************************************************************/
 
-// Data Structures and Constants Necessary
+/* Data Structures and Constants Necessary */
+
 std::vector<std::string> t9 = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
 
-// Function Declarations
+/*******************************************************************************************************/
+
+/* Function Declarations */
 
 // letterCominations returns a std::vector<std::string> that contains all possible 
 // std::strings given a numerical combination. This is like t9 texting. 
 // Example would be input "45" and returns "gj", "gk", "gl", "hj", "hk", "hl", "ij", "ik", "il" 
 std::vector<std::string> letterCombinations(std::string digits);
 
+
 // Given the head of a list, removes the nth node from the end
 ListNode* removeNthFromEnd(ListNode* head, int n);
+
 
 // Delete the entire list
 ListNode* deleteList(ListNode* head);
 
+
 // Given n pairs of parentheses, this function generates all combinations of well-formed parentheses.
 std::vector<std::string> generateParenthesis(int n);
 
+
 // Helper for generateParenthesis
-void helper(std::vector<std::string> &vec, std::string str, int l, int r);
+void genParenHelper(std::vector<std::string> &vec, std::string str, int l, int r);
+
 
 // Merge k lists into one.
 ListNode* mergeKLists(std::vector<ListNode*>& lists);
 
+
 // Merge k lists using std library priority queue
 ListNode* mergeKListsPQ(std::vector<ListNode*>& lists);
+
 
 // Merge two lists into one
 ListNode* mergeTwoLists(ListNode* l1, ListNode* l2);
 
+
 // Returns true if there is a cycle in the list
 bool isCycle(ListNode* ln);
+
 
 // Returns the index of the start of the cycle 
 int getStartOfCycle(ListNode* ln);
 
-int solution(std::vector<int> A);
 
-std::vector<int> toIntVector(std::string str)
-{
-  std::vector<int> out;
-  std::string i;
-  std::istringstream tokenStream(str);
-  while (std::getline(tokenStream, i, ','))
-  {
-    out.push_back(atoi(i.c_str()));
-  }
-  return out;
-}
+/*******************************************************************************************************/
 
+/* Entry point */
 
-// Entry point
 int main() 
 {   
-  std::vector<int> A = toIntVector("5,4,3,6,1");
-  std::cout << solution(A);
-}
-
-int solution(std::vector<int> A)
-{
-  int ret_rows = 0;
-  // Every element in the row needs to be greater than A[i]
-  
-  // Use a std::set
-  // This allows us to access the min / max / and current element in constant time
-  
-  // Create a vector of the row, each row is a std::set
-  std::vector<std::set<int>> vec;
-  
-  
-  for(size_t i = 0 ; i < A.size() ; i++)
-  {
-    // Init, create a new row
-    if(i == 0)
-    {
-      std::set<int> tmp;
-      tmp.insert(A[i]);
-      vec.push_back(tmp);
-    }
-    else
-    {
-      // Loop through the rows.
-      
-      bool rowFound = false;
-      for(size_t i = 0 ; i < vec.size() ; i++)
-      {
-        // Check the beginning
-        // Get the minimum element 
-        int min_element; 
-        if (!vec[i].empty()) 
-          min_element = *vec[i].begin(); 
-  
-        // Min element in the row is not greater, move on
-        if(!(min_element > A[i])) continue;
-        
-        // See if the value is in the row
-        // So, if this returns > 0 move to the next row
-        if(vec[i].count(A[i])) continue;
-        
-        // If here, add the new student to this row
-        vec[i].insert(A[i]);
-      }
-      
-      // A sufficient row NOT found, add a new one
-      if(!rowFound)
-      {
-        std::set<int> newRow;
-        newRow.insert(A[i]);
-        vec.push_back(newRow);
-      }
-    }
-  }
-  
-  // Your solution goes here.
-  return vec.size(); 
 }
 
 
-// Functions
+/*******************************************************************************************************/
+
+/* Functions */
 
 bool isCycle(ListNode* ln)
 {
@@ -151,6 +92,8 @@ bool isCycle(ListNode* ln)
   }
   return false;
 }
+
+
 
 // Returns the index of the start of the cycle 
 int getStartOfCycle(ListNode* ln)
@@ -186,6 +129,8 @@ int getStartOfCycle(ListNode* ln)
   return count;
 }
 
+
+
 ListNode* mergeTwoLists(ListNode* l1, ListNode* l2)
 {
   if(!l1) return l2;
@@ -202,6 +147,8 @@ ListNode* mergeTwoLists(ListNode* l1, ListNode* l2)
     return l2;
   }
 }
+
+
 
 ListNode* mergeKLists(std::vector<ListNode*>& lists) 
 {
@@ -220,6 +167,8 @@ ListNode* mergeKLists(std::vector<ListNode*>& lists)
     return ret;
   }
 }
+
+
 
 ListNode* mergeKListsPQ(std::vector<ListNode*>& lists)
 {
@@ -256,14 +205,18 @@ ListNode* mergeKListsPQ(std::vector<ListNode*>& lists)
   return head;
 }
 
+
+
 std::vector<std::string> generateParenthesis(int n)
 {
   std::vector<std::string> vec;
-  helper(vec, "", n, 0);
+  genParenHelper(vec, "", n, 0);
   return vec;
 }
 
-void helper(std::vector<std::string> &vec, std::string str, int l, int r) 
+
+
+void genParenHelper(std::vector<std::string> &vec, std::string str, int l, int r) 
 {
   if(l == 0 && r == 0) 
   {
@@ -272,10 +225,12 @@ void helper(std::vector<std::string> &vec, std::string str, int l, int r)
   }
     
   if(l > 0) 
-    helper(vec, str+"(", l - 1, r + 1);
+    genParenHelper(vec, str+"(", l - 1, r + 1);
   if(r > 0) 
-    helper(vec, str+")", l, r - 1);
+    genParenHelper(vec, str+")", l, r - 1);
 }
+
+
 
 ListNode* deleteList(ListNode* head) 
 {
@@ -287,6 +242,8 @@ ListNode* deleteList(ListNode* head)
   }
   return head;
 }
+
+
 
 ListNode* removeNthFromEnd(ListNode* head, int n) 
 {
@@ -311,6 +268,8 @@ ListNode* removeNthFromEnd(ListNode* head, int n)
   head->next = removeNthFromEnd(head->next, n);
   return head;
 }
+
+
 
 std::vector<std::string> letterCombinations(std::string digits) 
 {
@@ -339,3 +298,4 @@ std::vector<std::string> letterCombinations(std::string digits)
   }
   return res;
 }
+
