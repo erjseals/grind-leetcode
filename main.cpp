@@ -9,6 +9,7 @@
 #include "ListNode.hpp"
 #include "PriorityQueue.hpp"
 #include "Stack.hpp"
+#include "ArraysAndStrings.hpp"
 
 /*******************************************************************************************************/
 
@@ -68,6 +69,9 @@ int getStartOfCycle(ListNode* ln);
 
 int main() 
 {   
+  ArraysAndStrings ar;
+  std::cout << ar.isUnique("abcdefghijklmnopqrstuvwxyz") << std::endl;
+  std::cout << ar.checkPermutation("fnnind", "frnind") << std::endl;
 }
 
 
