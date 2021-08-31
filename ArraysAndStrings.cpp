@@ -1,6 +1,7 @@
 #include "ArraysAndStrings.hpp"
 #include <unordered_set>
 #include <unordered_map>
+#include <vector>
 
 bool ArraysAndStrings::isUnique(std::string str)
 {
@@ -24,6 +25,8 @@ bool ArraysAndStrings::isUnique(std::string str)
 
   return true;
 }
+
+
 
 // If string b is a permutation of string a, vice-versa
 bool ArraysAndStrings::checkPermutation(std::string a, std::string b)
@@ -56,3 +59,71 @@ bool ArraysAndStrings::checkPermutation(std::string a, std::string b)
 
   return true;
 }
+
+
+
+std::string ArraysAndStrings::URLify(std::string str, int trueSize)
+{
+  std::vector<std::string> sv;
+  bool newWord = true;
+  int index = 0;
+
+  // Fill vector with words
+  for (size_t i = 0 ; i < str.size() ; i++) {
+    if (str[i] == ' ') {
+      if (!newWord) {
+        newWord = true;
+        index++;
+      }
+    }
+    else {
+      if (newWord) {
+        sv.push_back("");
+        sv[index] += str[i];
+        newWord = false;
+      }
+      else
+        sv[index] += str[i];
+    }
+  }
+  
+  // Rebuild in the str
+  int j = 0;
+  size_t size = sv.size();
+  for (size_t i = 0 ; i < (size - 1) ; i++) {
+    for (size_t k = 0 ; k < sv[i].size() ; k++) {
+      str[j++] = sv[i][k];
+    }
+    str[j++] = '%';
+    str[j++] = '2';
+    str[j++] = '0';
+  }
+  for (size_t k = 0 ; k < sv[size-1].size() ; k++) {
+    str[j++] = sv[size-1][k];
+  }
+
+  return str;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
