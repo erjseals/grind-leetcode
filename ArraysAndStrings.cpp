@@ -107,7 +107,37 @@ std::string ArraysAndStrings::URLify(std::string str, int trueSize)
 
 
 
+// This just needs to find a palindrome
+// And we ignore the spaces
+//
+// Palindrome has all pairs of letters, but there can be ONE non-pair
+bool ArraysAndStrings::palindromePermutation(std::string str)
+{
+  std::unordered_map<char, int> ht;
+  
+  for (size_t i = 0 ; i < str.size() ; i++) {
+    if (str[i] == ' ');
+    else {
+      auto search = ht.find(str[i]);
+      
+      if (search != ht.end())
+        ht[str[i]]++;
+      else
+        ht[str[i]] = 1;
+    }
+  }
 
+  bool foundOdd = false;
+
+  for (auto it : ht) {
+    if (it.second % 2 != 0) {
+      if (foundOdd) return false;
+      else foundOdd = true;
+    } 
+  }
+
+  return true;
+}
 
 
 

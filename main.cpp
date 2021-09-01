@@ -73,6 +73,7 @@ int main()
   std::cout << ar.isUnique("abcdefghijklmnopqrstuvwxyz") << std::endl;
   std::cout << ar.checkPermutation("fnnind", "frnind") << std::endl;
   std::cout << ar.URLify("  Mr John Smith   ", 13) << std::endl;
+  std::cout << ar.palindromePermutation("taioc cta") << std::endl;
 }
 
 
