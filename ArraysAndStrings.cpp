@@ -141,7 +141,11 @@ bool ArraysAndStrings::palindromePermutation(std::string str)
 
 
 
+bool ArraysAndStrings::oneAway(std::string a, std::string b)
+{
 
+  return true;
+}
 
 
 
