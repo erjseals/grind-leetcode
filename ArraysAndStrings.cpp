@@ -141,9 +141,43 @@ bool ArraysAndStrings::palindromePermutation(std::string str)
 
 
 
+// Check if two strings are one edit (or zero) away from eachother
 bool ArraysAndStrings::oneAway(std::string a, std::string b)
 {
+  bool oneError = false;
+  if (a.size() == b.size()) {
+    for (size_t i = 0 ; i < a.size() ; i++) {
+      if (a[i] == b[i]);
+      else {
+        if (oneError) return false;
+        else oneError = true;
+      }
+    }
+  }
+  else if (abs(a.size() - b.size()) == 1) {
+    bool aLarger = true;
+    size_t size = 0;
 
+    if (a.size() > b.size())
+      size = a.size();
+    else {
+      aLarger = false;
+      size = b.size();
+    }
+
+    size_t j = 0;
+    for (size_t i = 0 ; i < size ; i++) {
+      if ( (aLarger && a[i] == b[j]) || (!aLarger && a[j] == b[i] ))
+        j++;
+      else {
+        if (oneError) return false;
+        else oneError = true;
+      }
+    }
+  }
+  else
+    return false;
+  
   return true;
 }
 
