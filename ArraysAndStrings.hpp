@@ -16,6 +16,7 @@ public:
   std::string URLify(std::string str, int trueSize);
   bool palindromePermutation(std::string str);
   bool oneAway(std::string a, std::string b);
+  std::string stringCompression(std::string str);
 };
 
 

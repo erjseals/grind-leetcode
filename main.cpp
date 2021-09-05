@@ -75,6 +75,8 @@ int main()
   std::cout << ar.URLify("  Mr John Smith   ", 13)        << std::endl;
   std::cout << ar.palindromePermutation("taioc cta")      << std::endl;
   std::cout << ar.oneAway("pale", "bake")                 << std::endl;
+  std::cout << ar.stringCompression("aabbbccca")          << std::endl;
+  std::cout << ar.stringCompression("abcdefgashbidlg")    << std::endl;
 }
 
 

@@ -2,6 +2,8 @@
 #include <unordered_set>
 #include <unordered_map>
 #include <vector>
+#include <string>
+#include <iostream>
 
 bool ArraysAndStrings::isUnique(std::string str)
 {
@@ -179,6 +181,36 @@ bool ArraysAndStrings::oneAway(std::string a, std::string b)
     return false;
   
   return true;
+}
+
+
+/*
+ * Method to perform basic string compression using the counts
+ * of repeated characters. For example, the string aabcccccaaa
+ * would become a2b1c5a3. If the "compressed" string would not
+ * become smaller than the original string, your method should
+ * return the original string. You can assume the string has
+ * only uppercase and lowercase letters (a-z).
+*/
+std::string ArraysAndStrings::stringCompression(std::string str)
+{
+  std::string ret;
+  bool checkComp = false;
+  for (size_t i = 0 ; i < str.size() ;) {
+    char currChar = str[i]; 
+    int count = 0;
+    while (str[i] == currChar) {
+      i++;
+      count++;
+    }
+    ret.push_back(currChar);
+    std::string temp = std::to_string(count);
+    ret += temp;
+
+    if (count > 1) checkComp = true;
+  } 
+  if (!checkComp) return str;
+  else return ret;
 }
 
 
