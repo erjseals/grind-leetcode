@@ -2,6 +2,7 @@
 #define ARRAYSANDSTRINGS_HPP
 
 #include <string>
+#include <vector>
 
 class ArraysAndStrings 
 {
@@ -17,6 +18,7 @@ public:
   bool palindromePermutation(std::string str);
   bool oneAway(std::string a, std::string b);
   std::string stringCompression(std::string str);
+  std::vector<std::vector<uint32_t>> rotateNinety(std::vector<std::vector<uint32_t>> matrix);
 };
 
 

@@ -70,6 +70,18 @@ int getStartOfCycle(ListNode* ln);
 int main() 
 {   
   ArraysAndStrings ar;
+
+  std::vector<std::vector<uint32_t>> matrix;
+  size_t sizeOfMatrix = 10;
+  for (size_t i = 0 ; i < sizeOfMatrix ; i++) {
+    std::vector<uint32_t> row;
+    for (size_t j = 10 ; j < sizeOfMatrix+10 ; j++) {
+      row.push_back(j + i);
+    }
+    matrix.push_back(row);
+  }
+
+  /*
   std::cout << ar.isUnique("abcdefghijklmnopqrstuvwxyz")  << std::endl;
   std::cout << ar.checkPermutation("fnnind", "frnind")    << std::endl;
   std::cout << ar.URLify("  Mr John Smith   ", 13)        << std::endl;
@@ -77,6 +89,23 @@ int main()
   std::cout << ar.oneAway("pale", "bake")                 << std::endl;
   std::cout << ar.stringCompression("aabbbccca")          << std::endl;
   std::cout << ar.stringCompression("abcdefgashbidlg")    << std::endl;
+  */
+
+  for (size_t i = 0 ; i < sizeOfMatrix ; i++) {
+    for (size_t j = 0 ; j < sizeOfMatrix ; j++) {
+      std::cout << matrix[i][j] << "  ";
+    }
+    std::cout << std::endl;
+  }
+  
+  std::cout << std::endl;
+  ar.rotateNinety( matrix );
+  for (size_t i = 0 ; i < sizeOfMatrix ; i++) {
+    for (size_t j = 0 ; j < sizeOfMatrix ; j++) {
+      std::cout << matrix[i][j] << "  ";
+    }
+    std::cout << std::endl;
+  }
 }
 
 

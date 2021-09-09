@@ -215,7 +215,17 @@ std::string ArraysAndStrings::stringCompression(std::string str)
 
 
 
+/*
+ * Each individual element comprises of a 32bit pixel
+ * Right now, we will do a clockwise 90 rotation
+*/
+std::vector<std::vector<uint32_t>> 
+ArraysAndStrings::rotateNinety(std::vector<std::vector<uint32_t>> matrix)
+{
+  
 
+  return matrix;
+}
 
 
 
