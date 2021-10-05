@@ -12,7 +12,7 @@ bool ArraysAndStrings::isUnique(std::string str)
 
   set.insert(str[0]);
 
-  for (size_t i = 1 ; i < str.size() ; i++)
+  for (unsigned int i = 1 ; i < str.size() ; i++)
   {
     auto search = set.find(str[i]);
 
@@ -37,7 +37,7 @@ bool ArraysAndStrings::checkPermutation(std::string a, std::string b)
 
   std::unordered_map<char, int> set;
 
-  for (size_t i = 0 ; i < a.size() ; i++) 
+  for (unsigned int i = 0 ; i < a.size() ; i++) 
   {
     auto search = set.find(a[i]);
     
@@ -47,7 +47,7 @@ bool ArraysAndStrings::checkPermutation(std::string a, std::string b)
       set[a[i]] = 1;
   }
 
-  for (size_t i = 0 ; i < b.size() ; i++) 
+  for (unsigned int i = 0 ; i < b.size() ; i++) 
   {
     auto search = set.find(b[i]);
 
@@ -71,7 +71,7 @@ std::string ArraysAndStrings::URLify(std::string str, int trueSize)
   int index = 0;
 
   // Fill vector with words
-  for (size_t i = 0 ; i < str.size() ; i++) {
+  for (unsigned int i = 0 ; i < str.size() ; i++) {
     if (str[i] == ' ') {
       if (!newWord) {
         newWord = true;
@@ -91,16 +91,16 @@ std::string ArraysAndStrings::URLify(std::string str, int trueSize)
   
   // Rebuild in the str
   int j = 0;
-  size_t size = sv.size();
-  for (size_t i = 0 ; i < (size - 1) ; i++) {
-    for (size_t k = 0 ; k < sv[i].size() ; k++) {
+  unsigned int size = sv.size();
+  for (unsigned int i = 0 ; i < (size - 1) ; i++) {
+    for (unsigned int k = 0 ; k < sv[i].size() ; k++) {
       str[j++] = sv[i][k];
     }
     str[j++] = '%';
     str[j++] = '2';
     str[j++] = '0';
   }
-  for (size_t k = 0 ; k < sv[size-1].size() ; k++) {
+  for (unsigned int k = 0 ; k < sv[size-1].size() ; k++) {
     str[j++] = sv[size-1][k];
   }
 
@@ -117,7 +117,7 @@ bool ArraysAndStrings::palindromePermutation(std::string str)
 {
   std::unordered_map<char, int> ht;
   
-  for (size_t i = 0 ; i < str.size() ; i++) {
+  for (unsigned int i = 0 ; i < str.size() ; i++) {
     if (str[i] == ' ');
     else {
       auto search = ht.find(str[i]);
@@ -148,7 +148,7 @@ bool ArraysAndStrings::oneAway(std::string a, std::string b)
 {
   bool oneError = false;
   if (a.size() == b.size()) {
-    for (size_t i = 0 ; i < a.size() ; i++) {
+    for (unsigned int i = 0 ; i < a.size() ; i++) {
       if (a[i] == b[i]);
       else {
         if (oneError) return false;
@@ -158,7 +158,7 @@ bool ArraysAndStrings::oneAway(std::string a, std::string b)
   }
   else if (abs(a.size() - b.size()) == 1) {
     bool aLarger = true;
-    size_t size = 0;
+    unsigned int size = 0;
 
     if (a.size() > b.size())
       size = a.size();
@@ -167,8 +167,8 @@ bool ArraysAndStrings::oneAway(std::string a, std::string b)
       size = b.size();
     }
 
-    size_t j = 0;
-    for (size_t i = 0 ; i < size ; i++) {
+    unsigned int j = 0;
+    for (unsigned int i = 0 ; i < size ; i++) {
       if ( (aLarger && a[i] == b[j]) || (!aLarger && a[j] == b[i] ))
         j++;
       else {
@@ -196,7 +196,7 @@ std::string ArraysAndStrings::stringCompression(std::string str)
 {
   std::string ret;
   bool checkComp = false;
-  for (size_t i = 0 ; i < str.size() ;) {
+  for (unsigned int i = 0 ; i < str.size() ;) {
     char currChar = str[i]; 
     int count = 0;
     while (str[i] == currChar) {

@@ -11,6 +11,7 @@
 #include "Stack.hpp"
 #include "ArraysAndStrings.hpp"
 #include "LLUtility.hpp"
+#include "LinkedList.hpp"
 
 /*******************************************************************************************************/
 
@@ -73,10 +74,10 @@ int main()
   ArraysAndStrings ar;
 
   std::vector<std::vector<uint32_t>> matrix;
-  size_t sizeOfMatrix = 10;
-  for (size_t i = 0 ; i < sizeOfMatrix ; i++) {
+  unsigned int sizeOfMatrix = 10;
+  for (unsigned int i = 0 ; i < sizeOfMatrix ; i++) {
     std::vector<uint32_t> row;
-    for (size_t j = 10 ; j < sizeOfMatrix+10 ; j++) {
+    for (unsigned int j = 10 ; j < sizeOfMatrix+10 ; j++) {
       row.push_back(j + i);
     }
     matrix.push_back(row);
@@ -92,8 +93,8 @@ int main()
   std::cout << ar.stringCompression("abcdefgashbidlg")    << std::endl;
   */
 
-  for (size_t i = 0 ; i < sizeOfMatrix ; i++) {
-    for (size_t j = 0 ; j < sizeOfMatrix ; j++) {
+  for (unsigned int i = 0 ; i < sizeOfMatrix ; i++) {
+    for (unsigned int j = 0 ; j < sizeOfMatrix ; j++) {
       std::cout << matrix[i][j] << "  ";
     }
     std::cout << std::endl;
@@ -101,8 +102,8 @@ int main()
   
   std::cout << std::endl;
   ar.rotateNinety( matrix );
-  for (size_t i = 0 ; i < sizeOfMatrix ; i++) {
-    for (size_t j = 0 ; j < sizeOfMatrix ; j++) {
+  for (unsigned int i = 0 ; i < sizeOfMatrix ; i++) {
+    for (unsigned int j = 0 ; j < sizeOfMatrix ; j++) {
       std::cout << matrix[i][j] << "  ";
     }
     std::cout << std::endl;
