@@ -13,6 +13,9 @@ prog: $(OBJ_SRCS)
 clean:
 	rm prog *.o
 
-
+test: all
+	$(MAKE) -C tests/
+cleantest:
+	$(MAKE) -C tests/ clean
 
 
