@@ -1,5 +1,7 @@
 #include "LinkedList.hpp"
 
+#include <iostream>
+
 
 ListNode* LinkedList::getBack()
 {
@@ -45,16 +47,76 @@ void LinkedList::addFront(ListNode* node)
 
 void LinkedList::addBack(ListNode* node)
 {
-
+  if (isEmpty()) {
+    m_head = node;
+  }
+  else {
+    ListNode* temp = getBack();
+    temp->next = node;
+  }
   m_size++;
 }
 
-void LinkedList::removeFront(ListNode* node)
+bool LinkedList::removeFront()
 {
-  
+  if (isEmpty()) {
+    return false;
+  } 
+  else {
+    ListNode* temp = m_head->next;
+    delete m_head;
+    m_head = temp;
+    m_size--;
+    return true;
+  }
 }
 
-void LinkedList::removeBack(ListNode* node)
+bool LinkedList::removeBack()
 {
+  if (isEmpty()) {
+    return false;
+  } 
+  else if (m_head->next == nullptr) {
+    delete m_head;
+    m_head = nullptr;
+    m_size = 0;
+    return true;
+  }
+  else {
+    ListNode* first  = m_head;
+    ListNode* second = m_head->next;
 
+    while (second->next) {
+      first  = second;
+      second = second->next;
+    }
+
+    delete second;
+    first->next = nullptr;
+    m_size--;
+    return true;
+  }
 }
+
+void LinkedList::print() 
+{
+  ListNode* temp = m_head;
+  while (temp) {
+    std::cout << temp->val << ' ';
+    temp = temp->next;
+  }
+  std::cout << std::endl;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

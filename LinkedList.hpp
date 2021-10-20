@@ -20,8 +20,10 @@ public:
 
   void addFront(ListNode* node);
   void addBack(ListNode* node);
-  void removeFront(ListNode* node);
-  void removeBack(ListNode* node);
+  bool removeFront();
+  bool removeBack();
+
+  void print();
 
 };
 
