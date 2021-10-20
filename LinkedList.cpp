@@ -1,7 +1,13 @@
 #include "LinkedList.hpp"
 
 #include <iostream>
+#include <unordered_set>
 
+std::ostream& operator<< (std::ostream& os, std::unordered_set<int> const& s) {
+  for (os << "[" << s.size() << "] { "; int i : s)
+    os << i << ' ';
+  return os << "}\n";
+}
 
 ListNode* LinkedList::getBack()
 {
@@ -31,6 +37,35 @@ LinkedList::~LinkedList()
 bool LinkedList::isEmpty()
 {
   return (m_size == 0);
+}
+
+void LinkedList::removeDups()
+{
+  if (m_size == 0) return;
+  if (m_size == 1) return;
+
+  std::unordered_set<int> set;
+
+  ListNode* it = m_head;
+  set.insert(it->val);
+
+  while (it->next) {
+
+    // Search if already in set
+    auto search = set.find(it->next->val);
+    if (search != set.end()) {
+      ListNode* temp = it->next->next;
+      delete it->next;
+      m_size--;
+      it->next = temp;
+    }
+    else 
+      set.insert(it->next->val);
+
+    // Don't move iterator if at the end
+    if (it->next)
+      it = it->next;
+  }
 }
 
 void LinkedList::addFront(ListNode* node)

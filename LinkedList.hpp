@@ -18,6 +18,8 @@ public:
 
   bool isEmpty();
 
+  void removeDups();
+
   void addFront(ListNode* node);
   void addBack(ListNode* node);
   bool removeFront();
