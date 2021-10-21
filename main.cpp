@@ -24,7 +24,7 @@ int main()
   ListNode * node3 = new ListNode(3);
   ListNode * node4 = new ListNode(4);
   ListNode * node5 = new ListNode(5);
-  ListNode * node6 = new ListNode(3);
+  ListNode * node6 = new ListNode(6);
 
   LinkedList* ll = new LinkedList();
   ll->addBack(node1);
@@ -34,7 +34,12 @@ int main()
   ll->addBack(node5);
   ll->addBack(node6);
 
-  ll->removeDups();
+  ListNode* ret = ll->findKthToLast(6);
+  if (ret)
+    std::cout << "Returned: " << ret->val << std::endl;
+  ret = ll->findKthToLastOptimally(6);
+  if (ret)
+    std::cout << "Returned: " << ret->val << std::endl;
 
   ll->print();
 

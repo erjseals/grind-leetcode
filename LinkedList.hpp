@@ -7,18 +7,22 @@ class LinkedList
 {
 private:
   ListNode* m_head;
-  unsigned int m_size;
 
   ListNode* getBack();
-
+  unsigned int getSize();
+  
 public:
   LinkedList()
-  : m_head(nullptr), m_size(0){}
+  : m_head(nullptr){}
   ~LinkedList();
 
   bool isEmpty();
 
   void removeDups();
+  void removeDupsInPlace();
+
+  ListNode* findKthToLast(unsigned int k);
+  ListNode* findKthToLastOptimally(unsigned int k);
 
   void addFront(ListNode* node);
   void addBack(ListNode* node);
