@@ -25,6 +25,7 @@ int main()
   ListNode * node4 = new ListNode(4);
   ListNode * node5 = new ListNode(5);
   ListNode * node6 = new ListNode(6);
+  ListNode * node7 = new ListNode(7);
 
   LinkedList* ll = new LinkedList();
   ll->addBack(node1);
@@ -33,15 +34,20 @@ int main()
   ll->addBack(node4);
   ll->addBack(node5);
   ll->addBack(node6);
+  ll->addBack(node7);
 
-  ListNode* ret = ll->findKthToLast(6);
-  if (ret)
-    std::cout << "Returned: " << ret->val << std::endl;
-  ret = ll->findKthToLastOptimally(6);
-  if (ret)
-    std::cout << "Returned: " << ret->val << std::endl;
+  // Deliberately create a loop
+  //node7->next = node3;
 
-  ll->print();
+  ll->printKTimes(20);
+
+  ListNode * node = nullptr;
+  unsigned int pos = ll->detectLoop(&node);
+
+  if (node)
+    ll->removeLoop(node);
+
+  ll->printKTimes(20);
 
   delete ll;
 }

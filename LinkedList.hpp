@@ -24,12 +24,19 @@ public:
   ListNode* findKthToLast(unsigned int k);
   ListNode* findKthToLastOptimally(unsigned int k);
 
+  // Double pointers are ugly, but I wanted to remember
+  unsigned int detectLoop(ListNode** ret);
+
+  // Pass the returned value of detectLoop
+  void removeLoop(ListNode* loopStart);
+
   void addFront(ListNode* node);
   void addBack(ListNode* node);
   bool removeFront();
   bool removeBack();
 
   void print();
+  void printKTimes(unsigned int k);
 
 };
 

@@ -155,6 +155,62 @@ ListNode* LinkedList::findKthToLastOptimally(unsigned int k)
   return p1;
 }
 
+unsigned int LinkedList::detectLoop(ListNode** ret)
+{
+  *ret = nullptr;
+  if (m_head == nullptr) return -1;
+  if (m_head->next == nullptr) return -1;
+  if (m_head->next->next == nullptr) return -1;
+
+  ListNode* fast = m_head->next->next;
+  ListNode* slow = m_head->next;
+
+  while (fast != slow) {
+    // Do bound checks for the fast ptr
+    // If ever it hits a nullptr, there is not a cycle
+    if (fast->next == nullptr) return -1;
+    fast = fast->next;
+    
+    if (fast->next == nullptr) return -1;
+    fast = fast->next;
+    
+    slow = slow->next;
+  }
+
+  unsigned int count = 0;
+  slow = m_head;
+
+  while (fast != slow) {
+    fast = fast->next;
+    slow = slow->next;
+    count++;
+  }
+
+  *ret = slow;
+  return count;
+}
+
+void LinkedList::removeLoop(ListNode* loopStart)
+{
+  ListNode* temp = m_head;
+  
+  if (temp == nullptr) return;  
+
+  // First pass
+  while (temp->next != loopStart) {
+    temp = temp->next;
+  }
+
+  temp = temp->next;
+
+  // Second pass
+  while (temp->next != loopStart) {
+    temp = temp->next;
+  }
+  
+  temp->next = nullptr;
+}
+
 void LinkedList::addFront(ListNode* node)
 {
   if (isEmpty()) {
@@ -225,8 +281,16 @@ void LinkedList::print()
   std::cout << std::endl;
 }
 
-
-
+void LinkedList::printKTimes(unsigned int k) 
+{
+  ListNode* temp = m_head;
+  while (temp && k > 0) {
+    std::cout << temp->val << ' ';
+    temp = temp->next;
+    k--;
+  }
+  std::cout << std::endl;
+}
 
 
 
