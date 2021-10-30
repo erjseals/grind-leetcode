@@ -9,6 +9,7 @@
 #include "ListNode.hpp"
 #include "PriorityQueue.hpp"
 #include "Stack.hpp"
+//#include "StackWithMin.hpp"
 #include "ArraysAndStrings.hpp"
 #include "LinkedList.hpp"
 #include "LCQuestions.hpp"
@@ -19,6 +20,8 @@
 
 int main() 
 {   
+  Stack s;
+
   ListNode * node1 = new ListNode(1);
   ListNode * node2 = new ListNode(2);
   ListNode * node3 = new ListNode(3);
@@ -42,7 +45,7 @@ int main()
   ll->printKTimes(20);
 
   ListNode * node = nullptr;
-  unsigned int pos = ll->detectLoop(&node);
+  ll->detectLoop(&node);
 
   if (node)
     ll->removeLoop(node);

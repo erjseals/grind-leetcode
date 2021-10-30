@@ -20,7 +20,7 @@ public:
     }
   }
 
-  void push(int value)
+  virtual void push(int value)
   {
     ListNode * tmp = new ListNode(value);
     tmp->next = m_top;
@@ -28,7 +28,7 @@ public:
     m_size++;
   }
 
-  int pop()
+  virtual int pop()
   {
     if(isEmpty())
       return 0;
