@@ -13,20 +13,20 @@ SlidingWindow::SlidingWindow() {
   std::cout << maxSubArray(testCase3) << std::endl;
 }
 
-int SlidingWindow::maxSubArray(std::vector<int>& nums) {
+int SlidingWindow::maxSubArray(std::vector<int> &nums) {
   int maxSum = INT_MIN;
-  for(int i = 0 ; i < nums.size() ; i++) {
-      for(int j = i, tempSum = 0 ; j < nums.size() ; j++) {
-          tempSum += nums[j];
-          if(tempSum > maxSum) {
-              maxSum = tempSum;
-          }
+  for (int i = 0; i < nums.size(); i++) {
+    for (int j = i, tempSum = 0; j < nums.size(); j++) {
+      tempSum += nums[j];
+      if (tempSum > maxSum) {
+        maxSum = tempSum;
       }
+    }
   }
   return maxSum;
 }
 
-int SlidingWindow::maxSubArrayRecursive(std::vector<int>& nums) {
+int SlidingWindow::maxSubArrayRecursive(std::vector<int> &nums) {
   int maxSum = INT_MIN;
   return maxSum;
 }

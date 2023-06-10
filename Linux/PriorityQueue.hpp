@@ -3,48 +3,39 @@
 
 #include "ListNode.hpp"
 
-class PriorityQueue
-{
+class PriorityQueue {
 private:
   int m_size;
-  std::vector<ListNode*> m_container;
+  std::vector<ListNode *> m_container;
 
   // Given the index of the newly inserted node
   // percolate this node up the tree as needed
-  // 
-  void percolateUp (int index);
+  //
+  void percolateUp(int index);
 
-  void percolateDown (int index); 
+  void percolateDown(int index);
 
-  bool compare(ListNode* a, ListNode* b);
+  bool compare(ListNode *a, ListNode *b);
 
 public:
-  PriorityQueue() 
-  : m_size(0){}
-    
-  ~PriorityQueue(){}
-    
-  bool empty()
-  {
-    return m_size < 1;
-  }    
-    
-  int size()
-  {
-    return m_size;
-  }
+  PriorityQueue() : m_size(0) {}
 
-  ListNode* top() 
-  {
-    if(empty()) 
+  ~PriorityQueue() {}
+
+  bool empty() { return m_size < 1; }
+
+  int size() { return m_size; }
+
+  ListNode *top() {
+    if (empty())
       return nullptr;
-    else 
+    else
       return m_container[0];
   }
 
-  void push(ListNode* ln);
+  void push(ListNode *ln);
 
-  ListNode* pop();
+  ListNode *pop();
 };
 
 #endif

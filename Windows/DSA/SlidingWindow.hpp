@@ -3,14 +3,15 @@
 
 #include <vector>
 
-class SlidingWindow
-{
+class SlidingWindow {
 public:
-	SlidingWindow();
+  SlidingWindow();
+
+  int maxSubArray(std::vector<int> &nums);
+  int maxSubArrayRecursive(std::vector<int> &nums);
 
 private:
-	int maxSubArray(std::vector<int>& nums);
-	int maxSubArrayRecursive(std::vector<int>& nums);
+  int maxSubHelper(std::vector<int> &nums, int index, bool force);
 };
 
 #endif

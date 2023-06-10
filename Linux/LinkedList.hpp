@@ -3,17 +3,15 @@
 
 #include "ListNode.hpp"
 
-class LinkedList
-{
+class LinkedList {
 private:
-  ListNode* m_head;
+  ListNode *m_head;
 
-  ListNode* getBack();
+  ListNode *getBack();
   unsigned int getSize();
-  
+
 public:
-  LinkedList()
-  : m_head(nullptr){}
+  LinkedList() : m_head(nullptr) {}
   ~LinkedList();
 
   bool isEmpty();
@@ -21,23 +19,22 @@ public:
   void removeDups();
   void removeDupsInPlace();
 
-  ListNode* findKthToLast(unsigned int k);
-  ListNode* findKthToLastOptimally(unsigned int k);
+  ListNode *findKthToLast(unsigned int k);
+  ListNode *findKthToLastOptimally(unsigned int k);
 
   // Double pointers are ugly, but I wanted to remember
-  unsigned int detectLoop(ListNode** ret);
+  unsigned int detectLoop(ListNode **ret);
 
   // Pass the returned value of detectLoop
-  void removeLoop(ListNode* loopStart);
+  void removeLoop(ListNode *loopStart);
 
-  void addFront(ListNode* node);
-  void addBack(ListNode* node);
+  void addFront(ListNode *node);
+  void addBack(ListNode *node);
   bool removeFront();
   bool removeBack();
 
   void print();
   void printKTimes(unsigned int k);
-
 };
 
 #endif

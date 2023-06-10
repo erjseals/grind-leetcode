@@ -3,10 +3,9 @@
 
 #include "Stack.hpp"
 
-class StackWithMin : public Stack
-{
+class StackWithMin : public Stack {
 private:
-  Stack::Stack * m_minStack;
+  Stack::Stack *m_minStack;
 
 public:
   StackWithMin();
