@@ -11,7 +11,8 @@ public:
   int maxSubArrayRecursive(std::vector<int> &nums);
 
 private:
-  int maxSubHelper(std::vector<int> &nums, int index, bool force);
+  int maxSubHelper(std::vector<int> &nums, int index, bool force,
+                   std::vector<std::vector<int>> &dp);
 };
 
 #endif

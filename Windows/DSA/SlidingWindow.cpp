@@ -35,25 +35,38 @@ int SlidingWindow::maxSubArray(std::vector<int> &nums) {
 }
 
 int SlidingWindow::maxSubArrayRecursive(std::vector<int> &nums) {
-  return maxSubHelper(nums, 0, false);
+  // Create a 2D array, initialized with all values to -1.
+  // This a 2-row 2D array, having the 0/1 rows correlate to force true/false
+  std::vector<std::vector<int>> dp(2, std::vector<int>(nums.size(), -1));
+  return maxSubHelper(nums, 0, false, dp);
 }
 
-int SlidingWindow::maxSubHelper(std::vector<int> &nums, int index, bool force) {
+// The Dynamic Programming aspect of this is straightforward
+// We've done the logic, all we have to do is check if a given
+// function call has already been calculated.
+int SlidingWindow::maxSubHelper(std::vector<int> &nums, int index, bool force,
+                                std::vector<std::vector<int>> &dp) {
   // check out of bounds index
   size_t size = nums.size();
   if (index >= size) {
     return force ? 0 : INT_MIN;
   }
+  // Check if we've been in this situation before
+  if (dp[force][index] != -1) {
+    return dp[force][index];
+  }
+
   int left = 0, right = 0, ret = 0;
 
   if (force) {
     left = 0;
-    right = nums[index] + maxSubHelper(nums, index + 1, true);
+    right = nums[index] + maxSubHelper(nums, index + 1, true, dp);
     ret = std::max(left, right);
   } else {
-    left = nums[index] + maxSubHelper(nums, index + 1, true);
-    right = maxSubHelper(nums, index + 1, false);
+    left = nums[index] + maxSubHelper(nums, index + 1, true, dp);
+    right = maxSubHelper(nums, index + 1, false, dp);
     ret = std::max(left, right);
   }
+  dp[force][index] = ret;
   return ret;
 }
