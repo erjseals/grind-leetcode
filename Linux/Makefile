@@ -1,17 +1,17 @@
 CPP_SRCS := $(wildcard *.cpp) 
 OBJ_SRCS := $(CPP_SRCS:.cpp=.o)
 
-all: prog
+all: main
 
 # $@ matches the target; $< matches the first dependent
-prog: $(OBJ_SRCS) 
+main: $(OBJ_SRCS) 
 	g++ -Wall -g -o $@ $(OBJ_SRCS)
 
 %.o: %.cpp
 	g++ -g -Wall -c -o $@ $<
 
 clean:
-	rm prog *.o
+	rm *.o
 
 test: all
 	$(MAKE) -C tests/
