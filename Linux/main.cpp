@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 #include <map>
 #include <memory>
@@ -6,6 +7,7 @@
 #include <set>
 #include <sstream>
 #include <string>
+#include <unordered_map>
 #include <unordered_set>
 #include <vector>
 
@@ -13,26 +15,26 @@ class Solution {
   public:
     // Given a string s, find the length of the longest substring without repeating characters.
     int lengthOfLongestSubstring(std::string s) {
-      if(s.length() <= 1) return 0;
-      if(s.length() == 1) return 1;
-      int max = 0;
-      std::unordered_set<char> us;
-      for(size_t i = 0 ; i < s.length() ; i += 1) {
-        us.clear();
-        for(size_t j = i ; j < s.length() ; j+=1) {
-          auto it = us.find(s.at(j));
-          if(it != us.end()) {
-            break;
+      int ret = 0;
+      int n = s.length();
+      int i = 0;
+
+      std::unordered_map<char,int> map;
+
+      for( int j = 0 ; j < n ; j++ ) {
+        map[s[j]]++;
+        if( map[s[j]] == 1 ) {
+          ret = std::max(ret, j-i+1);
+        }
+        else {
+          while( map[s[j]] > 1){
+            map[s[i]]--;
+            i++;
           }
-          else {
-            us.insert(s.at(j));
-            if( max < static_cast<int>(us.size())) {
-              max = static_cast<int>(us.size());
-            }
-          }
+          ret = std::max(ret, j-i+1);
         }
       }
-      return max;
+      return ret;
     }
 
     void test(){
