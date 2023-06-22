@@ -60,26 +60,70 @@ int Utils::lengthOfLongestSubstring(std::string s) {
   return ret;
 }
 
+// You are given a string s and an integer k.
+// You can choose any character of the string and 
+// change it to any other uppercase English character.
+// You can perform this operation at most k times.
+//
+// Return the length of the longest substring containing
+// the same letter you can get after performing the above operations.
+int Utils::characterReplacement(std::string s, int k) {
+  if((static_cast<int>(s.length())-1 )<= k) {
+    return s.length();
+  }
+
+  int max = 0;
+  int tempMax = 0;
+
+  for(char c = 'A' ; c <= 'Z' ; c++) {
+    for(size_t i = 0 ; i < s.length() ; i++) {
+      int itK = k;
+      tempMax = 0;
+      for(size_t j = i ; j < s.length() ; j++) {
+        if(s[j] == c) {
+          tempMax+=1;
+        }
+        else if(itK > 0) {
+          tempMax+=1;
+          itK-=1;
+        }
+        else {
+          break;
+        }
+        if(tempMax > max) {
+          max = tempMax;
+        }
+      }
+    }
+  }
+  return max;
+}
+
 void Utils::test(){
-  std::vector<int> nums = {2,3,1,2,4,3};
-  int target = 7;
-
-  int res = minSubArrayLen(target, nums);
-  if( res == 2) {
-    std::cout << "Test 1 pass" << std::endl;
-  } else {
-    std::cout << "Test 1 fail. Expected 2, got: " << res << std::endl;
+  std::string s = "ABAB";
+  int res = characterReplacement(s,2);
+  if(res != 4){
+    std::cout << "Test Failed. Expected 4, got " << res << std::endl;
+  }
+  else {
+    std::cout << "Test Passed" << std::endl;
   }
 
-  nums = {1,1,1,1,1,1,1,1};
-  target = 11;
-
-  res = minSubArrayLen(target, nums);
-  if( res == 0) {
-    std::cout << "Test 2 pass" << std::endl;
-  } else {
-    std::cout << "Test 2 fail. Expected 0, got: " << res << std::endl;
+  s = "AABABBA";
+  res = characterReplacement(s,1);
+  if(res != 4){
+    std::cout << "Test Failed. Expected 4, got " << res << std::endl;
+  }
+  else {
+    std::cout << "Test Passed" << std::endl;
   }
 
-  
+  s = "ABCDEF";
+  res = characterReplacement(s,5);
+  if(res != 6){
+    std::cout << "Test Failed. Expected 6, got " << res << std::endl;
+  }
+  else {
+    std::cout << "Test Passed" << std::endl;
+  }
 }
