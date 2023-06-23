@@ -1,8 +1,9 @@
-#include "Utils.hpp"
+#include "SW.hpp"
 
 #include <algorithm>
 #include <cstdint>
 #include <iostream>
+#include <limits>
 #include <map>
 #include <memory>
 #include <ostream>
@@ -14,7 +15,9 @@
 #include <unordered_set>
 #include <vector>
 
-int Utils::minSubArrayLen(int target, std::vector<int>& nums) {
+namespace SW {
+
+int minSubArrayLen(int target, std::vector<int>& nums) {
   bool set = false;
   int res = INT32_MAX;
   int n = nums.size();
@@ -37,7 +40,7 @@ int Utils::minSubArrayLen(int target, std::vector<int>& nums) {
 }
 
 // Given a string s, find the length of the longest substring without repeating characters.
-int Utils::lengthOfLongestSubstring(std::string s) {
+int lengthOfLongestSubstring(std::string s) {
   int ret = 0;
   int n = s.length();
   int i = 0;
@@ -67,39 +70,42 @@ int Utils::lengthOfLongestSubstring(std::string s) {
 //
 // Return the length of the longest substring containing
 // the same letter you can get after performing the above operations.
-int Utils::characterReplacement(std::string s, int k) {
-  if((static_cast<int>(s.length())-1 )<= k) {
-    return s.length();
-  }
-
+int characterReplacement(std::string s, int k) {
+  std::unordered_map<char, int> map;
   int max = 0;
-  int tempMax = 0;
+  int n = s.length();
 
-  for(char c = 'A' ; c <= 'Z' ; c++) {
-    for(size_t i = 0 ; i < s.length() ; i++) {
-      int itK = k;
-      tempMax = 0;
-      for(size_t j = i ; j < s.length() ; j++) {
-        if(s[j] == c) {
-          tempMax+=1;
+  for(int i = 0, j = 0 ; j < n ; ) {
+    map[s[j]]++;
+    int windowSize = j - i + 1;
+    
+    int maxValue = 0;
+    for (const auto& pair : map) {
+        if (pair.second > maxValue) {
+            maxValue = pair.second;
         }
-        else if(itK > 0) {
-          tempMax+=1;
-          itK-=1;
-        }
-        else {
-          break;
-        }
-        if(tempMax > max) {
-          max = tempMax;
-        }
+    }
+
+    if((windowSize - maxValue) <= k) {
+      if(windowSize > max) {
+        max = windowSize;
       }
+      j++;
+    }
+    else {
+      // Need to decrement s[j] since it's inc-ed every for loop
+      // iteration. That needs to happen to make the maxValue
+      // calculation correct. Could probably be more graceful, but
+      // ** shrugs **
+      map[s[j]]--;
+      map[s[i]]--;
+      i++;
     }
   }
   return max;
 }
 
-void Utils::test(){
+void test(){
   std::string s = "ABAB";
   int res = characterReplacement(s,2);
   if(res != 4){
@@ -127,3 +133,5 @@ void Utils::test(){
     std::cout << "Test Passed" << std::endl;
   }
 }
+
+};

@@ -1,7 +1,6 @@
-#include "Utils.hpp"
+#include "SW.hpp"
 
 int main() {
-  Utils util; 
-  util.test();
+  SW::test();
 }
 

@@ -1,11 +1,10 @@
-#ifndef UTILS_HPP
-#define UTILS_HPP
+#ifndef SW_HPP
+#define SW_HPP
 
 #include <string>
 #include <vector>
 
-class Utils {
-  public:
+namespace SW {
     void test();
 
     int lengthOfLongestSubstring(std::string s);
